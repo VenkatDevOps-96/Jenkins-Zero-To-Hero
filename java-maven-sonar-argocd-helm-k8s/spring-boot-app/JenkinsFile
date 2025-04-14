@@ -24,8 +24,12 @@ pipeline {
         SONAR_URL = "https://sonarcloud.io/"
       }
       steps {
-        withCredentials([string(credentialsId: 'sonar-cred', usernameVariable: 'SONAR_USER', passwordVariable: 'SONAR_PASSWORD')]) {
-          sh 'cd java-maven-sonar-argocd-helm-k8s/spring-boot-app && mvn sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL}'
+        withCredentials([usernamePassword(credentialsId: 'sonarqube', usernameVariable: 'SONAR_USER', passwordVariable: 'SONAR_PASSWORD')]) {
+    // Your code that uses SONAR_USER and SONAR_PASSWORD
+    sh '''
+        echo "Username: $SONAR_USER"
+        echo "Password: $SONAR_PASSWORD"
+    '''
         }
       }
     }
